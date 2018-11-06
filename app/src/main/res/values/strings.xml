@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BlackJackApp</string>
+    <string name="titulo">BlackJack App</string>
+    <string name="apostar">Apostar:</string>
+    <string name="go">Go</string>
+    <string name="recibir">Recibir Carta</string>
+    <string name="plantarse">Plantarse</string>
+</resources>
