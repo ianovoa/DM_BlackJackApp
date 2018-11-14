@@ -6,6 +6,7 @@ import java.util.Random;
 public class Baraja {
     private static Baraja baraja=null;
     private ArrayList<Carta> cartas = new ArrayList<>();
+    private ArrayList<Carta> descartes = new ArrayList<>(); //conjunto de cartas ya usadas
 
     private Baraja(){
         this.cartas.add(new Carta("As de Corazones","@drawable/ac",1));
@@ -64,7 +65,7 @@ public class Baraja {
         this.cartas.add(new Carta("Reina de Treboles","@drawable/qt",10));
         this.cartas.add(new Carta("Rey de Treboles","@drawable/kt",10));
 
-        barajar();
+        this.barajar();
     }
 
     private void barajar(){
@@ -82,8 +83,16 @@ public class Baraja {
 
     public Carta getCarta(){
         Carta toret=this.cartas.get(0);
+        this.descartes.add(toret);
+        this.cartas.remove(toret); //una carta no puede aparecer dos veces en una misma ronda
         this.barajar();
         return toret;
+    }
+
+    public void finalRonda(){ //se recuperan todos los descartes
+        for(Carta carta:this.descartes) this.cartas.add(carta);
+        this.descartes=new ArrayList<>();
+        this.barajar();
     }
 
     public static Baraja getBaraja(){
