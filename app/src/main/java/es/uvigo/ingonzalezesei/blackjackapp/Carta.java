@@ -1,15 +1,13 @@
 package es.uvigo.ingonzalezesei.blackjackapp;
 
-import android.media.Image;
-
 public class Carta {
     private String name;
-    private Image image;
+    private String srcImage;
     private int value;
 
-    public Carta(String name,Image image,int value){
+    public Carta(String name,String srcImage,int value){
         this.name=name;
-        this.image=image;
+        this.srcImage=srcImage;
         this.value=value;
     }
 
@@ -17,11 +15,15 @@ public class Carta {
         return this.name;
     }
 
-    public Image getImage(){
-        return this.image;
+    public String getImage(){
+        return this.srcImage;
     }
 
     public int getValue(){
         return this.value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

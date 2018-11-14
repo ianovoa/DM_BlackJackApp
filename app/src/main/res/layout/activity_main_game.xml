@@ -14,28 +14,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/turno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="TextView" />
+                android:layout_centerHorizontal="true"
+                android:layout_weight=".5"
+                android:text="TextView"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/dinero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="TextView" />
+                android:layout_centerHorizontal="true"
+                android:layout_weight=".5"
+                android:text="TextView"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/tapas" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,15 +59,19 @@
                 android:id="@+id/puntPropia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="0.5"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/puntCasa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="0.5"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,20 +103,20 @@
                 android:id="@+id/apostarText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".2"
-                android:text="@string/apostar" />
+                android:layout_centerHorizontal="true"
+                android:layout_weight=".3"
+                android:text="@string/apostar"
+                android:textAlignment="center" />
 
             <EditText
                 android:id="@+id/cantidad"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
+                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number" />
 
             <Button
                 android:id="@+id/apostarBoton"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/go" />
@@ -108,8 +125,9 @@
                 android:id="@+id/apostadoTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".4"
-                android:text="TextView" />
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
