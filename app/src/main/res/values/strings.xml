@@ -3,6 +3,8 @@
     <string name="titulo">BlackJack App</string>
     <string name="apostar">Apostar:</string>
     <string name="go">Go</string>
+    <string name="NuevaPartida">Nueva Partida</string>
+    <string name="MejoresPuntuaciones">Mejores Puntuaciones</string>
     <string name="recibir">Recibir Carta</string>
     <string name="plantarse">Plantarse</string>
 </resources>
