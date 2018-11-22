@@ -32,8 +32,6 @@ public class MainGame extends AppCompatActivity {
 
     private final ImageView imagenCarta=this.findViewById(R.id.imageView); //variable imagen interfaz
 
-    private final EditText cantidadApostada=this.findViewById(R.id.cantidad); //variable EditText interfaz
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +50,22 @@ public class MainGame extends AppCompatActivity {
     }
 
     private void apostar(){
-        if(this.estado==this.CARTA1) this.setEstado(this.CARTA2);
+        EditText cantidadApostada=this.findViewById(R.id.cantidad);
+        if(!cantidadApostada.getText().toString().equals("")) {
+            if (this.estado == this.CARTA1) this.setEstado(this.CARTA2);
+            this.setDinApostado(this.dinApostado + Integer.parseInt(cantidadApostada.getText().toString()));
+            Carta carta = this.baraja.getCarta();
+            this.setPuntJugador(this.puntJugador + carta.getValue());
+            this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+carta.getImage(),null,null));
+            if(this.puntJugador>21) this.setEstado(this.MAS21);
+        }
+    }
+
+    private void recibirCarta(){ //el jugador pide otra carta pero sin apostar
 
     }
 
-    private void recibirCarta(){
-
-    }
-
-    private void turnoMaquina(){
+    private void turnoMaquina(){ //la maquina intenta superar la punt del jugador sin pasarse de 21
         this.setEstado(this.CASA);
 
     }
@@ -89,7 +94,7 @@ public class MainGame extends AppCompatActivity {
         apuesta.setText("Apostado: "+this.dinGanado);
     }
 
-    private void setEstado(byte est){
+    private void setEstado(byte est){ //cambia turnos y habilita/deshabilita botones
         this.estado=est;
         TextView turno=this.findViewById(R.id.turno);
         switch (est){
