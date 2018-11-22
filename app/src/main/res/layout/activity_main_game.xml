@@ -20,7 +20,6 @@
                 android:id="@+id/turno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_weight=".5"
                 android:text="TextView"
                 android:textAlignment="center" />
@@ -29,7 +28,6 @@
                 android:id="@+id/dinero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_weight=".5"
                 android:text="TextView"
                 android:textAlignment="center" />
@@ -59,7 +57,6 @@
                 android:id="@+id/puntPropia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_weight="0.5"
                 android:text="TextView"
                 android:textAlignment="center" />
@@ -68,7 +65,6 @@
                 android:id="@+id/puntCasa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_weight="0.5"
                 android:text="TextView"
                 android:textAlignment="center" />
@@ -84,14 +80,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/recibir" />
+                android:text="@string/recibir"
+                android:enabled="true" />
 
             <Button
                 android:id="@+id/plantarse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/plantarse" />
+                android:text="@string/plantarse"
+                android:enabled="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,31 +101,34 @@
                 android:id="@+id/apostarText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_weight=".3"
+                android:layout_weight=".1"
                 android:text="@string/apostar"
                 android:textAlignment="center" />
 
             <EditText
                 android:id="@+id/cantidad"
+                android:layout_width="@android:dimen/dialog_min_width_minor"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:ems="10"
                 android:inputType="number" />
 
             <Button
                 android:id="@+id/apostarBoton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/go" />
+                android:layout_weight=".01"
+                android:text="@string/go"
+                android:enabled="true" />
 
             <TextView
                 android:id="@+id/apostadoTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".3"
                 android:text="TextView"
                 android:textAlignment="center" />
+
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
