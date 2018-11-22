@@ -51,7 +51,7 @@ public class MainGame extends AppCompatActivity {
 
     private void apostar(){
         EditText cantidadApostada=this.findViewById(R.id.cantidad);
-        if(!cantidadApostada.getText().toString().equals("")) {
+        if(!cantidadApostada.getText().toString().equals("") && Integer.parseInt(cantidadApostada.getText().toString())>0) {
             if (this.estado == this.CARTA1) this.setEstado(this.CARTA2);
             this.setDinApostado(this.dinApostado + Integer.parseInt(cantidadApostada.getText().toString()));
             Carta carta = this.baraja.getCarta();
