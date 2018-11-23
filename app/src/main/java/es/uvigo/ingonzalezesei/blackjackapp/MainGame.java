@@ -1,13 +1,17 @@
 package es.uvigo.ingonzalezesei.blackjackapp;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainGame extends AppCompatActivity {
+    private static String LogTag = MainGame.class.getSimpleName();
+
     private int puntJugador; //puntuacion total de jugador en esta ronda
     private int puntMaquina; //idem maquina
     private int dinGanado; //dinero total ganado por el jugador
@@ -49,11 +53,39 @@ public class MainGame extends AppCompatActivity {
         this.btnPlantarse.setOnClickListener((v) -> turnoMaquina());
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d( LogTag,"Guardando datos partida..." );
+
+        final SharedPreferences.Editor editor = this.getPreferences( MODE_PRIVATE ).edit();
+        editor.putInt("puntJugador",this.puntJugador);
+        editor.putInt("puntMaquina",this.puntMaquina);
+        editor.putInt("dinGanado",this.dinGanado);
+        editor.putInt("dinApostado",this.dinApostado);
+        editor.putInt("estado",this.estado);
+        editor.apply();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d( LogTag,"Cargando datos partida..." );
+
+        final SharedPreferences prefs = this.getPreferences( MODE_PRIVATE );
+        this.setPuntJugador(prefs.getInt("puntJugador",0));
+        this.setPuntMaquina(prefs.getInt("puntMaquina",0));
+        this.setDinGanado(prefs.getInt("dinGanado",1000));
+        this.setDinApostado(prefs.getInt("dinApostado",0));
+        this.setEstado(Byte.parseByte(Integer.toString(prefs.getInt("estado",this.CARTA1))));
+    }
+
     private void apostar(){
         EditText cantidadApostada=this.findViewById(R.id.cantidad);
-        if(!cantidadApostada.getText().toString().equals("") && Integer.parseInt(cantidadApostada.getText().toString())>0) {
+        String apuesta=cantidadApostada.getText().toString();
+        if(!apuesta.equals("") && Integer.parseInt(apuesta)>0 && Integer.parseInt(apuesta)<=this.dinGanado) {
             if (this.estado == this.CARTA1) this.setEstado(this.CARTA2);
-            this.setDinApostado(this.dinApostado + Integer.parseInt(cantidadApostada.getText().toString()));
+            this.setDinApostado(this.dinApostado + Integer.parseInt(apuesta));
             Carta carta = this.baraja.getCarta();
             this.setPuntJugador(this.puntJugador + carta.getValue());
             this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+carta.getImage(),null,null));
