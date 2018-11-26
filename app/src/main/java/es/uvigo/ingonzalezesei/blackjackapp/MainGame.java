@@ -94,6 +94,10 @@ public class MainGame extends AppCompatActivity {
     }
 
     private void recibirCarta(){ //el jugador pide otra carta pero sin apostar
+        this.setEstado(this.CARTA2);
+        Carta cartaRecibida=this.baraja.getCarta();
+        this.setPuntJugador(this.puntJugador + cartaRecibida.getValue());
+        this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+cartaRecibida.getImage(),null,null));
 
     }
 
