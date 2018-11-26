@@ -86,19 +86,15 @@ public class MainGame extends AppCompatActivity {
         if(!apuesta.equals("") && Integer.parseInt(apuesta)>0 && Integer.parseInt(apuesta)<=this.dinGanado) {
             if (this.estado == this.CARTA1) this.setEstado(this.CARTA2);
             this.setDinApostado(this.dinApostado + Integer.parseInt(apuesta));
-            Carta carta = this.baraja.getCarta();
-            this.setPuntJugador(this.puntJugador + carta.getValue());
-            this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+carta.getImage(),null,null));
-            if(this.puntJugador>21) this.setEstado(this.MAS21);
+            this.recibirCarta();
         }
     }
 
     private void recibirCarta(){ //el jugador pide otra carta pero sin apostar
-        this.setEstado(this.CARTA2);
-        Carta cartaRecibida=this.baraja.getCarta();
-        this.setPuntJugador(this.puntJugador + cartaRecibida.getValue());
-        this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+cartaRecibida.getImage(),null,null));
-
+        Carta carta=this.baraja.getCarta();
+        this.setPuntJugador(this.puntJugador + carta.getValue());
+        this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+carta.getImage(),null,null));
+        if(this.puntJugador>21) this.setEstado(this.MAS21);
     }
 
     private void turnoMaquina(){ //la maquina intenta superar la punt del jugador sin pasarse de 21
