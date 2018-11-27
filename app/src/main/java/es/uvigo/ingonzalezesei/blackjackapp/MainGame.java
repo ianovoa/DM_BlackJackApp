@@ -97,8 +97,20 @@ public class MainGame extends AppCompatActivity {
         if(this.puntJugador>21) this.setEstado(this.MAS21);
     }
 
-    private void turnoMaquina(){ //la maquina intenta superar la punt del jugador sin pasarse de 21
+    private void turnoMaquina(){ //la maquina intenta superar la puntuacion del jugador sin pasarse de 21
         this.setEstado(this.CASA);
+        int puntuacionaSuperar = this.puntJugador;
+        do{
+            Carta carta=this.baraja.getCarta();
+            this.setPuntMaquina(this.puntMaquina + carta.getValue());
+            this.imagenCarta.setImageResource(this.getResources().getIdentifier("DM_BlackJackApp:"+carta.getImage(),null,null));
+            //funcion retardo
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException ex) {
+// aquí tratamos la excepción como queramos, haciendo nada, sacando por pantalla el error, ...
+            }
+        }while (this.puntMaquina >= 21 || this.puntMaquina > puntuacionaSuperar);
 
     }
 
