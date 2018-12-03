@@ -107,7 +107,7 @@
 
             <EditText
                 android:id="@+id/cantidad"
-                android:layout_width="@android:dimen/dialog_min_width_minor"
+                android:layout_width="36dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:ems="10"
