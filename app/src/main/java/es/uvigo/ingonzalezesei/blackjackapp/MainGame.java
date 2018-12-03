@@ -124,8 +124,8 @@ public class MainGame extends AppCompatActivity {
             Carta carta=this.baraja.getCarta();
             this.setPuntMaquina(this.puntMaquina + carta.getValue());
             this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
-            handler.postDelayed(new Runnable(){public void run(){}},3000);
-        }while (this.puntMaquina<21 && this.puntMaquina<this.puntJugador);
+            //handler.postDelayed(new Runnable(){public void run(){}},3000);
+        }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
         if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
             this.setDinGanado(this.dinGanado+this.dinApostado*2);
@@ -135,11 +135,12 @@ public class MainGame extends AppCompatActivity {
         }
 
         this.setDinApostado(0);
-        handler.postDelayed(new Runnable(){public void run(){}},3000);
+        //handler.postDelayed(new Runnable(){public void run(){}},3000);
 
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
         this.imagenCarta.setImageResource(R.drawable.tapas);
+        this.baraja.finalRonda(); //reinicia la baraja una vez acabada la ronda
         this.setEstado(this.CARTA1);
     }
 
