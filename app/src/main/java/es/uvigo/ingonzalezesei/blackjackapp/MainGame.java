@@ -17,6 +17,7 @@ public class MainGame extends AppCompatActivity {
     private int puntMaquina; //idem maquina
     private int dinGanado; //dinero total ganado por el jugador
     private int dinApostado; //dinero apostado en esta ronda
+    private int numRondas; //guarda el numero de rondas jugadas
 
     private int estado;
     private final int CARTA1=1; //estado: primera carta jugador
@@ -67,6 +68,7 @@ public class MainGame extends AppCompatActivity {
         this.setDinGanado(1000);
         this.setDinApostado(0);
         this.setEstado(this.CARTA1);
+        this.numRondas=0;
 
         this.btnApostar.setOnClickListener((v) -> apostar());
         this.btnRecibir.setOnClickListener((v) -> recibirCarta());
@@ -142,6 +144,8 @@ public class MainGame extends AppCompatActivity {
         this.imagenCarta.setImageResource(R.drawable.tapas);
         this.baraja.finalRonda(); //reinicia la baraja una vez acabada la ronda
         this.setEstado(this.CARTA1);
+
+        numRondas++;
     }
 
     private void setPuntJugador(int punt){ //cambia puntuacion jugador y lo muestra en la vista

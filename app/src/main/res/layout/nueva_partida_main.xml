@@ -1,73 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.9"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/Jugador"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight=".8"
-            android:text="Jugador"
-            android:textAlignment="center" />
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/PuntosConseguidos"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight=".8"
-            android:text="Puntos del jugador:"
-            android:textAlignment="center" />
-        <TextView
-            android:id="@+id/PuntosConseguidosMaquina"
-            android:layout_width="wrap_content"
+            android:layout_weight="0.9"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/DineroGanado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_weight=".8"
+                android:text="Dinero Ganado:"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/numRondas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_weight=".8"
+                android:text="Número de Rondas Jugadas"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight=".8"
-            android:text="Puntos de la maquina:"
-            android:textAlignment="center" />
-        <TextView
-            android:id="@+id/DineroGanado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight=".8"
-            android:text="Dinero Ganado:"
-            android:textAlignment="center" />
-        <TextView
-            android:id="@+id/DineroApostadoTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight=".7"
-            android:text="Dinero apostado:"
-            android:textAlignment="center" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/Pregunta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:text="Desea empezar una nueva partifa:"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:layout_weight="0.05"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Pregunta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:text="Desea empezar una nueva partifa:"
+                android:textAlignment="center" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
