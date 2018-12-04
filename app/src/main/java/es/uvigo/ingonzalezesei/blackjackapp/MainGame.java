@@ -17,7 +17,11 @@ public class MainGame extends AppCompatActivity {
     private int puntMaquina; //idem maquina
     private int dinGanado; //dinero total ganado por el jugador
     private int dinApostado; //dinero apostado en esta ronda
+
     private int numRondas; //guarda el numero de rondas jugadas
+    private int numWin; //numero de rondas ganadas seguidas
+    private int numWinMax; //max numero de rondas ganadas seguidas
+    private int dinGanadoMax; //max dinero total ganado por el jugador
 
     private int estado;
     private final int CARTA1=1; //estado: primera carta jugador
@@ -69,7 +73,11 @@ public class MainGame extends AppCompatActivity {
         this.setDinApostado(0);
         this.setEstado(this.CARTA1);
         this.numRondas=0;
+        this.numWin=0;
+        this.numWinMax=0;
+        this.dinGanadoMax=1000;
 
+        //botones a sus funciones
         this.btnApostar.setOnClickListener((v) -> apostar());
         this.btnRecibir.setOnClickListener((v) -> recibirCarta());
         this.btnPlantarse.setOnClickListener((v) -> turnoMaquina());
@@ -86,6 +94,10 @@ public class MainGame extends AppCompatActivity {
         editor.putInt("dinGanado",this.dinGanado);
         editor.putInt("dinApostado",this.dinApostado);
         editor.putInt("estado",this.estado);
+        editor.putInt("numRondas",this.numRondas);
+        editor.putInt("numWin",this.numWin);
+        editor.putInt("numWinMax",this.numWinMax);
+        editor.putInt("dinGanadoMax",this.dinGanadoMax);
         editor.apply();
     }
 
@@ -100,6 +112,10 @@ public class MainGame extends AppCompatActivity {
         this.setDinGanado(prefs.getInt("dinGanado",1000));
         this.setDinApostado(prefs.getInt("dinApostado",0));
         this.setEstado(prefs.getInt("estado",this.CARTA1));
+        this.numRondas=prefs.getInt("numRondas",0);
+        this.numWin=prefs.getInt("numWin",0);
+        this.numWinMax=prefs.getInt("numWinMax",0);
+        this.dinGanadoMax=prefs.getInt("dinGanadoMax",1000);
     }
 
     private void apostar(){
@@ -131,6 +147,8 @@ public class MainGame extends AppCompatActivity {
 
         if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
             this.setDinGanado(this.dinGanado+this.dinApostado*2);
+            this.numWin++;
+            if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
         }
         else if(this.puntMaquina==this.puntJugador){ //jugador y maquina empatan
             this.setDinGanado(this.dinGanado+this.dinApostado);
@@ -143,9 +161,8 @@ public class MainGame extends AppCompatActivity {
         this.setPuntMaquina(0);
         this.imagenCarta.setImageResource(R.drawable.tapas);
         this.baraja.finalRonda(); //reinicia la baraja una vez acabada la ronda
+        this.numRondas++;
         this.setEstado(this.CARTA1);
-
-        numRondas++;
     }
 
     private void setPuntJugador(int punt){ //cambia puntuacion jugador y lo muestra en la vista
@@ -161,6 +178,7 @@ public class MainGame extends AppCompatActivity {
     private void setDinGanado(int din){ //cambia dinero total y lo muestra en la vista
         this.dinGanado=din;
         this.dinero.setText("Dinero total: "+this.dinGanado);
+        if(this.dinGanado>this.dinGanadoMax) this.dinGanadoMax=this.dinGanado;
     }
 
     private void setDinApostado(int din){ //cambia apuesta y lo muestra en la vista
