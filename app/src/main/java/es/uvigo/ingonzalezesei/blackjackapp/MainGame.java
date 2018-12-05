@@ -1,14 +1,21 @@
 package es.uvigo.ingonzalezesei.blackjackapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import static es.uvigo.ingonzalezesei.blackjackapp.R.layout.mejores;
+
 
 public class MainGame extends AppCompatActivity {
     private static String LogTag = MainGame.class.getSimpleName();
@@ -53,6 +60,7 @@ public class MainGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
+        //setContentView(R.layout.mejores);
 
         this.btnRecibir=this.findViewById(R.id.recibir);
         this.btnPlantarse=this.findViewById(R.id.plantarse);
@@ -117,7 +125,13 @@ public class MainGame extends AppCompatActivity {
         this.numWinMax=prefs.getInt("numWinMax",0);
         this.dinGanadoMax=prefs.getInt("dinGanadoMax",1000);
     }
+   /* public void ejecutar_info(View view){
+        Intent i = new Intent(this, InfoClase.class);
 
+        startActivity(i);
+
+
+    }*/
     private void apostar(){
         EditText cantidadApostada=this.findViewById(R.id.cantidad);
         String apuesta=cantidadApostada.getText().toString();
@@ -142,7 +156,7 @@ public class MainGame extends AppCompatActivity {
             Carta carta=this.baraja.getCarta();
             this.setPuntMaquina(this.puntMaquina + carta.getValue());
             this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
-            //handler.postDelayed(new Runnable(){public void run(){}},3000);
+            handler.postDelayed(null,500);
         }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
         if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
@@ -155,7 +169,7 @@ public class MainGame extends AppCompatActivity {
         }
 
         this.setDinApostado(0);
-        //handler.postDelayed(new Runnable(){public void run(){}},3000);
+        handler.postDelayed(null,3000);
 
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
@@ -186,6 +200,10 @@ public class MainGame extends AppCompatActivity {
         this.setDinGanado(this.dinGanado-din); //din apostado = din perdido
         this.apuesta.setText("Apostado: "+this.dinApostado);
     }
+    public int getPuntJugador()
+    {
+        return this.puntJugador;
+    }
 
     private void setEstado(int est){ //cambia turnos y habilita/deshabilita botones
         this.estado=est;
@@ -215,5 +233,25 @@ public class MainGame extends AppCompatActivity {
                 this.btnPlantarse.setEnabled(false);
                 break;
         }
+    }
+    @Override public boolean onCreateOptionsMenu(Menu mimenu){
+
+        getMenuInflater().inflate(R.menu.main_menu,mimenu);
+        return true;
+    }
+    @Override public boolean onOptionsItemSelected(MenuItem opcion_menu){
+        int id=opcion_menu.getItemId();
+        if(id==R.id.NuevaPartida){
+            /*Intent about = new Intent(getApplicationContext(), NuevaPartidaMain.class);
+            startActivity(about);*/
+    return true;
+        }
+        if(id==R.id.MejoresPuntuaciones){
+/*return true;
+            Intent about = new Intent(getApplicationContext(), MejoresPuntuacionesMain.class);
+            startActivity(about);*/
+            return true;
+        }
+return super.onOptionsItemSelected(opcion_menu);
     }
 }

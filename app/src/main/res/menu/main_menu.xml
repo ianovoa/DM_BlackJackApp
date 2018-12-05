@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainGame"
+    >
+
     <item android:title="@string/NuevaPartida" android:id="@+id/NuevaPartida" />
     <item android:title="@string/MejoresPuntuaciones" android:id="@+id/MejoresPuntuaciones" />
 </menu>
