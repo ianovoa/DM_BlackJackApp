@@ -51,10 +51,10 @@ public class MainGame extends AppCompatActivity {
     private ImageView imagenCarta; //variable imagen interfaz
 
     //variables textos
-    private TextView turno;
+    //private TextView turno;
     private TextView apuesta;
     private TextView dinero;
-    private TextView textPuntCasa;
+    //private TextView textPuntCasa;
     private TextView textPuntJugador;
 
     @Override
@@ -69,10 +69,10 @@ public class MainGame extends AppCompatActivity {
 
         this.imagenCarta=this.findViewById(R.id.imageView);
 
-        this.turno=this.findViewById(R.id.turno);
+        //this.turno=this.findViewById(R.id.turno);
         this.apuesta=this.findViewById(R.id.apostadoTotal);
         this.dinero=this.findViewById(R.id.dinero);
-        this.textPuntCasa=this.findViewById(R.id.puntCasa);
+        //this.textPuntCasa=this.findViewById(R.id.puntCasa);
         this.textPuntJugador=this.findViewById(R.id.puntPropia);
 
         //variables inicializadas
@@ -159,7 +159,7 @@ public class MainGame extends AppCompatActivity {
         do{
             Carta carta=this.baraja.getCarta();
             this.setPuntMaquina(this.puntMaquina + carta.getValue());
-            this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
+            //this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
             //handler.postDelayed(null,500);
         }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
@@ -170,7 +170,7 @@ public class MainGame extends AppCompatActivity {
             dlg.setTitle("Ganas");
             dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
         }
-        else if(this.puntMaquina==this.puntJugador){ //jugador y maquina empatan
+        else if(this.puntMaquina==this.puntJugador && this.puntJugador==21){ //jugador y maquina empatan
             this.setDinGanado(this.dinGanado+this.dinApostado);
             dlg.setTitle("Empate");
             dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
@@ -199,7 +199,7 @@ public class MainGame extends AppCompatActivity {
 
     private void setPuntMaquina(int punt){ //cambia puntuacion maquina y lo muestra en la vista
         this.puntMaquina=punt;
-        this.textPuntCasa.setText("Puntuacion casa: "+this.puntMaquina);
+        //this.textPuntCasa.setText("Puntuacion casa: "+this.puntMaquina);
     }
 
     private void setDinGanado(int din){ //cambia dinero total y lo muestra en la vista
@@ -222,25 +222,25 @@ public class MainGame extends AppCompatActivity {
         this.estado=est;
         switch (est){
             case CARTA1:
-                this.turno.setText("Turno: Jugador");
+                //this.turno.setText("Turno: Jugador");
                 this.btnApostar.setEnabled(true);
                 this.btnRecibir.setEnabled(false);
                 this.btnPlantarse.setEnabled(false);
                 break;
             case CARTA2:
-                this.turno.setText("Turno: Jugador");
+                //this.turno.setText("Turno: Jugador");
                 this.btnApostar.setEnabled(true);
                 this.btnRecibir.setEnabled(true);
                 this.btnPlantarse.setEnabled(true);
                 break;
             case MAS21:
-                this.turno.setText("Turno: Jugador");
+                //this.turno.setText("Turno: Jugador");
                 this.btnApostar.setEnabled(false);
                 this.btnRecibir.setEnabled(false);
                 this.btnPlantarse.setEnabled(true);
                 break;
             case CASA:
-                this.turno.setText("Turno: Casa");
+                //this.turno.setText("Turno: Casa");
                 this.btnApostar.setEnabled(false);
                 this.btnRecibir.setEnabled(false);
                 this.btnPlantarse.setEnabled(false);
