@@ -2,7 +2,8 @@ package es.uvigo.ingonzalezesei.blackjackapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
+//import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -150,26 +151,38 @@ public class MainGame extends AppCompatActivity {
     }
 
     private void turnoMaquina(){ //la maquina intenta superar la puntuacion del jugador sin pasarse de 21
-        Handler handler = new Handler();
+        //Handler handler = new Handler();
+        final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
+        dlg.setPositiveButton( "Aceptar", null );
+        dlg.setCancelable( false );
         this.setEstado(this.CASA);
         do{
             Carta carta=this.baraja.getCarta();
             this.setPuntMaquina(this.puntMaquina + carta.getValue());
             this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
-            handler.postDelayed(null,500);
+            //handler.postDelayed(null,500);
         }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
         if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
             this.setDinGanado(this.dinGanado+this.dinApostado*2);
             this.numWin++;
             if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
+            dlg.setTitle("Ganas");
+            dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
         }
         else if(this.puntMaquina==this.puntJugador){ //jugador y maquina empatan
             this.setDinGanado(this.dinGanado+this.dinApostado);
+            dlg.setTitle("Empate");
+            dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
+        }
+        else{
+            dlg.setTitle("Pierdes");
+            dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
         }
 
         this.setDinApostado(0);
-        handler.postDelayed(null,3000);
+        //handler.postDelayed(null,3000);
+        dlg.create().show();
 
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
