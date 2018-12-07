@@ -1,70 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/background_light">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.uvigo.ingonzalezesei.blackjackapp.MainGame">
+
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Puntuacion"
-            android:id="@+id/texto"
-            android:layout_below="@+id/category"
-            />
+            android:layout_weight=".1"
+            android:text="Mayor numero de victorias:" />
 
         <TextView
+
+            android:id="@+id/numVictoriasMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Jugador1"
-            android:id="@+id/category"
-            android:textSize="21sp"
+            android:layout_weight=".9"
+            android:text="TextView" />
 
-            android:layout_alignParentTop="true"
-            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
         <TextView
-            android:id="@+id/texto2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/category"
-            android:layout_marginTop="47dp"
-            android:text="Puntuacion" />
+            android:layout_weight=".1"
+            android:text="Dinero maximo ganado:" />
 
         <TextView
-            android:id="@+id/category2"
+
+            android:id="@+id/dinMaxGanado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="47dp"
-            android:text="Jugador2"
+            android:layout_weight=".9"
+            android:text="TextView" />
 
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="21sp" />
-
-        <TextView
-            android:id="@+id/texto3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/category"
-            android:layout_marginTop="97dp"
-            android:text="Puntuacion" />
-
-        <TextView
-            android:id="@+id/category2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="93dp"
-            android:text="Jugador3"
-
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="21sp" />
+    </LinearLayout>
 
 
 
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

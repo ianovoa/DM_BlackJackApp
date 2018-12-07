@@ -14,11 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
 
-import static es.uvigo.ingonzalezesei.blackjackapp.R.layout.mejores;
+
+//import static es.uvigo.ingonzalezesei.blackjackapp.R.layout.mejores;
 
 
 public class MainGame extends AppCompatActivity {
+
     private static String LogTag = MainGame.class.getSimpleName();
 
     private int puntJugador; //puntuacion total de jugador en esta ronda
@@ -28,8 +31,8 @@ public class MainGame extends AppCompatActivity {
 
     private int numRondas; //guarda el numero de rondas jugadas
     private int numWin; //numero de rondas ganadas seguidas
-    private int numWinMax; //max numero de rondas ganadas seguidas
-    private int dinGanadoMax; //max dinero total ganado por el jugador
+    public static int numWinMax; //max numero de rondas ganadas seguidas
+    public static int dinGanadoMax; //max dinero total ganado por el jugador
 
     private int estado;
     private final int CARTA1=1; //estado: primera carta jugador
@@ -48,6 +51,7 @@ public class MainGame extends AppCompatActivity {
     private Button btnPlantarse;
     private Button btnApostar;
 
+
     private ImageView imagenCarta; //variable imagen interfaz
 
     //variables textos
@@ -56,6 +60,8 @@ public class MainGame extends AppCompatActivity {
     private TextView dinero;
     //private TextView textPuntCasa;
     private TextView textPuntJugador;
+    private TextView textNumWinMax; //max numero de rondas ganadas seguidas
+    private TextView textDinGanadoMax; //max dinero total ganado por el jugador
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class MainGame extends AppCompatActivity {
         this.btnRecibir=this.findViewById(R.id.recibir);
         this.btnPlantarse=this.findViewById(R.id.plantarse);
         this.btnApostar=this.findViewById(R.id.apostarBoton);
+        //this.btnMostrarMejoresPuntuaciones=this.findViewById(R.id.MejoresPuntuaciones);
 
         this.imagenCarta=this.findViewById(R.id.imageView);
 
@@ -74,6 +81,8 @@ public class MainGame extends AppCompatActivity {
         this.dinero=this.findViewById(R.id.dinero);
         //this.textPuntCasa=this.findViewById(R.id.puntCasa);
         this.textPuntJugador=this.findViewById(R.id.puntPropia);
+       // this.textNumWinMax=this.findViewById(R.id.numVictoriasMax);
+        //this.textDinGanadoMax=this.findViewById(R.id.dinMaxGanado);
 
         //variables inicializadas
         this.setPuntJugador(0);
@@ -90,6 +99,7 @@ public class MainGame extends AppCompatActivity {
         this.btnApostar.setOnClickListener((v) -> apostar());
         this.btnRecibir.setOnClickListener((v) -> recibirCarta());
         this.btnPlantarse.setOnClickListener((v) -> turnoMaquina());
+        //this.btnMostrarMejoresPuntuaciones.setOnClickListener((v) -> mostrarMejoresPuntuaciones());
     }
 
     @Override
@@ -117,6 +127,7 @@ public class MainGame extends AppCompatActivity {
 
         final SharedPreferences prefs = this.getPreferences( MODE_PRIVATE );
         this.setPuntJugador(prefs.getInt("puntJugador",0));
+
         this.setPuntMaquina(prefs.getInt("puntMaquina",0));
         this.setDinGanado(prefs.getInt("dinGanado",1000));
         this.setDinApostado(prefs.getInt("dinApostado",0));
@@ -125,6 +136,7 @@ public class MainGame extends AppCompatActivity {
         this.numWin=prefs.getInt("numWin",0);
         this.numWinMax=prefs.getInt("numWinMax",0);
         this.dinGanadoMax=prefs.getInt("dinGanadoMax",1000);
+       // this.setNumWinMax(prefs.getInt("numWinMax",0));
     }
    /* public void ejecutar_info(View view){
         Intent i = new Intent(this, InfoClase.class);
@@ -191,7 +203,10 @@ public class MainGame extends AppCompatActivity {
         this.numRondas++;
         this.setEstado(this.CARTA1);
     }
-
+    /*private void setNumWinMax(int numWin){ //cambia puntuacion jugador y lo muestra en la vista
+        this.numWinMax=numWin;
+        this.textNumWinMax.setText("Puntuacion jugador: "+this.numWinMax);
+    }*/
     private void setPuntJugador(int punt){ //cambia puntuacion jugador y lo muestra en la vista
         this.puntJugador=punt;
         this.textPuntJugador.setText("Puntuacion jugador: "+this.puntJugador);
@@ -247,6 +262,34 @@ public class MainGame extends AppCompatActivity {
                 break;
         }
     }
+
+    public void mostrarMejoresPuntuaciones(View v) {
+
+       Intent about = new Intent(this, MejoresPuntuaciones.class);
+       about.putExtra("numMaxWins",numWinMax);
+        about.putExtra("maxDinGan",dinGanadoMax);
+        startActivity(about);
+
+        }
+    /*
+     public void onClickAceptar(View view){
+
+
+    int aux_dinGanadoMax = dinGanadoMax.getInteger().toInteger();
+    int aux_numWinMax = numWinMax.getInteger().toInteger();
+
+    if(!aux_dinGanadoMax.matches("") && !aux_numWinMax.matches("")) {
+
+        Intent i = new Intent(this, Gracias.class);
+        i.putExtra("nombre", aux_nombre);
+        i.putExtra("apellido", aux_apellido);
+        startActivity(i);
+    }
+    else{
+        Toast.makeText(getApplicationContext(), "Debe ingresar datos", Toast.LENGTH_SHORT).show();
+    }
+}
+}*/
     @Override public boolean onCreateOptionsMenu(Menu mimenu){
 
         getMenuInflater().inflate(R.menu.main_menu,mimenu);
@@ -254,16 +297,16 @@ public class MainGame extends AppCompatActivity {
     }
     @Override public boolean onOptionsItemSelected(MenuItem opcion_menu){
         int id=opcion_menu.getItemId();
+        //mejoresPuntuaciones.setOnClickListener()
         if(id==R.id.NuevaPartida){
             /*Intent about = new Intent(getApplicationContext(), NuevaPartidaMain.class);
             startActivity(about);*/
     return true;
         }
         if(id==R.id.MejoresPuntuaciones){
-/*return true;
-            Intent about = new Intent(getApplicationContext(), MejoresPuntuacionesMain.class);
-            startActivity(about);*/
-            return true;
+            mostrarMejoresPuntuaciones(null);
+           // return true;
+
         }
 return super.onOptionsItemSelected(opcion_menu);
     }
