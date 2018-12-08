@@ -34,6 +34,18 @@ public class MainGame extends AppCompatActivity {
     private final int MAS21=3; //estado: el jugador se pasa de 21
     private final int CASA=4; //estado: turno maquina
 
+    public MainGame(int puntJugador, int puntMaquina, int dinGanado, int dinApostado, int numRondas, int numWin, int numWinMax, int dinGanadoMax, int estado) {
+        this.puntJugador = puntJugador;
+        this.puntMaquina = puntMaquina;
+        this.dinGanado = dinGanado;
+        this.dinApostado = dinApostado;
+        this.numRondas = numRondas;
+        this.numWin = numWin;
+        this.numWinMax = numWinMax;
+        this.dinGanadoMax = dinGanadoMax;
+        this.estado = estado;
+    }
+
     private Baraja baraja=Baraja.getBaraja(); //baraja utilizada por el juego
     /*
     this.baraja.getCarta(); -> recibe objeto Carta de la baraja
@@ -147,29 +159,28 @@ public class MainGame extends AppCompatActivity {
         dlg.setPositiveButton( "Aceptar", null );
         dlg.setCancelable( false );
         this.setEstado(this.CASA);
-        do{
-            Carta carta=this.baraja.getCarta();
-            this.setPuntMaquina(this.puntMaquina + carta.getValue());
-            //this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
-            //handler.postDelayed(null,500);
-        }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
+            do{
+                Carta carta=this.baraja.getCarta();
+                this.setPuntMaquina(this.puntMaquina + carta.getValue());
+                //this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
+                //handler.postDelayed(null,500);
+            }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
-        if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
-            this.setDinGanado(this.dinGanado+this.dinApostado*2);
-            this.numWin++;
-            if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
-            dlg.setTitle("Ganas");
-            dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
-        }
-        else if(this.puntMaquina==this.puntJugador && this.puntJugador==21){ //jugador y maquina empatan
-            this.setDinGanado(this.dinGanado+this.dinApostado);
-            dlg.setTitle("Empate");
-            dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
-        }
-        else{
-            dlg.setTitle("Pierdes");
-            dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
-        }
+            if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
+                this.setDinGanado(this.dinGanado+this.dinApostado*2);
+                this.numWin++;
+                if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
+                dlg.setTitle("Ganas");
+                dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
+            }   else if(this.puntMaquina==this.puntJugador && this.puntJugador==21){ //jugador y maquina empatan
+                    this.setDinGanado(this.dinGanado+this.dinApostado);
+                    dlg.setTitle("Empate");
+                    dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
+                    }else{
+                    dlg.setTitle("Pierdes");
+                    dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
+                    }
+
 
         this.setDinApostado(0);
         //handler.postDelayed(null,3000);
@@ -240,6 +251,22 @@ public class MainGame extends AppCompatActivity {
        about.putExtra("numWinMax",this.numWinMax);
        about.putExtra("dinGanadoMax",this.dinGanadoMax);
        startActivity(about);
+     }
+
+     public void NuevaPartida(){
+         Log.d( LogTag,"Restableciendo datos de partida..." );
+
+         //Se vuelven a inicializar las variables
+         this.setPuntJugador(0);
+         this.setPuntMaquina(0);
+         this.setDinGanado(1000);
+         this.setDinApostado(0);
+         this.setEstado(this.CARTA1);
+         this.numRondas=0;
+         this.numWin=0;
+         this.numWinMax=0;
+         this.dinGanadoMax=1000;
+
      }
 
     @Override public boolean onCreateOptionsMenu(Menu mimenu){
