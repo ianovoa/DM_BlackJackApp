@@ -34,17 +34,6 @@ public class MainGame extends AppCompatActivity {
     private final int MAS21=3; //estado: el jugador se pasa de 21
     private final int CASA=4; //estado: turno maquina
 
-    public MainGame(int puntJugador, int puntMaquina, int dinGanado, int dinApostado, int numRondas, int numWin, int numWinMax, int dinGanadoMax, int estado) {
-        this.puntJugador = puntJugador;
-        this.puntMaquina = puntMaquina;
-        this.dinGanado = dinGanado;
-        this.dinApostado = dinApostado;
-        this.numRondas = numRondas;
-        this.numWin = numWin;
-        this.numWinMax = numWinMax;
-        this.dinGanadoMax = dinGanadoMax;
-        this.estado = estado;
-    }
 
     private Baraja baraja=Baraja.getBaraja(); //baraja utilizada por el juego
     /*
@@ -253,8 +242,10 @@ public class MainGame extends AppCompatActivity {
        startActivity(about);
      }
 
-     public void NuevaPartida(){
-         Log.d( LogTag,"Restableciendo datos de partida..." );
+     public void NuevaPartida(){ //Metodo nueva partida, restablece los datos de inicio.
+         final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
+         dlg.setPositiveButton( "Restablecer datos", null );
+         dlg.setCancelable( false );
 
          //Se vuelven a inicializar las variables
          this.setPuntJugador(0);
