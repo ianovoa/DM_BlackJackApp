@@ -13,7 +13,7 @@ public class MejoresPuntuaciones extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mejores);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras(); //con blundle extras se recogen las variables (tambien se pueden poner las variables como public o protected)
         int numWinMax = extras.getInt("numWinMax");
         int dinGanadoMax = extras.getInt("dinGanadoMax");
 

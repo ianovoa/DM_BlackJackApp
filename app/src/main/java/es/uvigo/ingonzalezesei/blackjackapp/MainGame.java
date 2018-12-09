@@ -235,11 +235,11 @@ public class MainGame extends AppCompatActivity {
         }
     }
 
-    public void mostrarMejoresPuntuaciones(View v) {
-       Intent about = new Intent(this, MejoresPuntuaciones.class);
-       about.putExtra("numWinMax",this.numWinMax);
+    public void mostrarMejoresPuntuaciones(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
+       Intent about = new Intent(this, MejoresPuntuaciones.class); //Con el intent te desplazas de una clase a otra.
+       about.putExtra("numWinMax",this.numWinMax); //El about sirve para desplazar la variable a otra clase.
        about.putExtra("dinGanadoMax",this.dinGanadoMax);
-       startActivity(about);
+       startActivity(about); //con el start activity se ejcuta la transición
      }
 
      public void NuevaPartida(){ //Metodo nueva partida, restablece los datos de inicio.
