@@ -1,5 +1,6 @@
 package es.uvigo.ingonzalezesei.blackjackapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 //import android.os.Handler;
@@ -91,7 +92,7 @@ public class MainGame extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause(){ // Pone la aplicación en pausa cuando se pone en segundo plano o se cierra
         super.onPause();
         Log.d( LogTag,"Guardando datos partida..." );
 
@@ -235,18 +236,14 @@ public class MainGame extends AppCompatActivity {
         }
     }
 
-    public void mostrarMejoresPuntuaciones(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
+    private void mostrarMejoresPuntuaciones(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
        Intent about = new Intent(this, MejoresPuntuaciones.class); //Con el intent te desplazas de una clase a otra.
        about.putExtra("numWinMax",this.numWinMax); //El about sirve para desplazar la variable a otra clase.
        about.putExtra("dinGanadoMax",this.dinGanadoMax);
        startActivity(about); //con el start activity se ejcuta la transición
      }
 
-     public void NuevaPartida(){ //Metodo nueva partida, restablece los datos de inicio.
-         final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
-         dlg.setPositiveButton( "Restablecer datos", null );
-         dlg.setCancelable( false );
-
+     private void nuevaPartida(){ //Metodo nueva partida, restablece los datos de inicio.
          //Se vuelven a inicializar las variables
          this.setPuntJugador(0);
          this.setPuntMaquina(0);
@@ -255,8 +252,7 @@ public class MainGame extends AppCompatActivity {
          this.setEstado(this.CARTA1);
          this.numRondas=0;
          this.numWin=0;
-         this.numWinMax=0;
-         this.dinGanadoMax=1000;
+
 
      }
 
@@ -268,10 +264,20 @@ public class MainGame extends AppCompatActivity {
     @Override public boolean onOptionsItemSelected(MenuItem opcion_menu){
         int id=opcion_menu.getItemId();
         if(id==R.id.NuevaPartida){
-            /*Intent about = new Intent(getApplicationContext(), NuevaPartidaMain.class);
-            startActivity(about);*/
-            return true;
+            final AlertDialog.Builder dlg = new AlertDialog.Builder( this );
+            dlg.setTitle("¿Desea iniciar una nueva partida?");
+            dlg.setMessage( "Se restablecerán todos los valores");
+            dlg.setPositiveButton("OK", new DialogInterface.OnClickListener() { //El aceptar, activa el boton que activa nueva partida
+                public void onClick(DialogInterface dialog, int id) {
+                    nuevaPartida();
+                }
+            });
+            dlg.setNegativeButton("No",null);
+            dlg.setCancelable( false );
+            dlg.create().show(); //muestra la venta emergente que hemos hecho
         }
+
+
         if(id==R.id.MejoresPuntuaciones) mostrarMejoresPuntuaciones(null);
         return super.onOptionsItemSelected(opcion_menu);
     }
