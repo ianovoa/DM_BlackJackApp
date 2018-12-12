@@ -1,4 +1,8 @@
 package es.uvigo.ingonzalezesei.blackjackapp;
+/* AUTORES:
+* Iago Nóvoa González
+* Rodrigo de Novoa Alonso
+* Alvaro Iglesias Vázquez*/
 
 import android.content.DialogInterface;
 import android.content.Intent;
