@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainGame extends AppCompatActivity {
     private static String LogTag = MainGame.class.getSimpleName();
@@ -32,6 +36,8 @@ public class MainGame extends AppCompatActivity {
     private int numWin; //numero de rondas ganadas seguidas
     private int numWinMax; //max numero de rondas ganadas seguidas
     private int dinGanadoMax; //max dinero total ganado por el jugador
+
+    private ArrayList<Integer> idCartas;
 
     private int estado;
     private final int CARTA1=1; //estado: primera carta jugador
@@ -53,14 +59,14 @@ public class MainGame extends AppCompatActivity {
 
     private ImageView imagenCarta; //variable imagen interfaz
 
+    private RecyclerView listaCartas;
+
     //variables textos
     //private TextView turno;
     private TextView apuesta;
     private TextView dinero;
     //private TextView textPuntCasa;
     private TextView textPuntJugador;
-    private TextView textNumWinMax; //max numero de rondas ganadas seguidas
-    private TextView textDinGanadoMax; //max dinero total ganado por el jugador
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,11 @@ public class MainGame extends AppCompatActivity {
         this.dinero=this.findViewById(R.id.dinero);
         //this.textPuntCasa=this.findViewById(R.id.puntCasa);
         this.textPuntJugador=this.findViewById(R.id.puntPropia);
+        this.listaCartas=this.findViewById(R.id.list);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listaCartas.setLayoutManager(layoutManager);
 
         //variables inicializadas
         this.setPuntJugador(0);
@@ -88,6 +99,9 @@ public class MainGame extends AppCompatActivity {
         this.numWin=0;
         this.numWinMax=0;
         this.dinGanadoMax=1000;
+        this.idCartas=new ArrayList<>();
+
+        listaCartas.setAdapter(new MyAdapter(this.idCartas));
 
         //botones a sus funciones
         this.btnApostar.setOnClickListener((v) -> apostar());
@@ -143,7 +157,12 @@ public class MainGame extends AppCompatActivity {
     private void recibirCarta(){ //el jugador pide otra carta pero sin apostar
         Carta carta=this.baraja.getCarta();
         this.setPuntJugador(this.puntJugador + carta.getValue());
-        this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
+        int idImage=this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName());
+        this.imagenCarta.setImageResource(idImage);
+        this.idCartas.add(idImage);
+        RecyclerView.Adapter myAdapter=new MyAdapter(this.idCartas);
+        listaCartas.setAdapter(myAdapter);
+        Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());
         if(this.puntJugador>21) this.setEstado(this.MAS21);
     }
 
@@ -215,6 +234,7 @@ public class MainGame extends AppCompatActivity {
         switch (est){
             case CARTA1:
                 //this.turno.setText("Turno: Jugador");
+                this.idCartas=new ArrayList<>();
                 this.btnApostar.setEnabled(true);
                 this.btnRecibir.setEnabled(false);
                 this.btnPlantarse.setEnabled(false);
