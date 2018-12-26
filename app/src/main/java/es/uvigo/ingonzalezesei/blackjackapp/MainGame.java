@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainGame extends AppCompatActivity {
     private static String LogTag = MainGame.class.getSimpleName();
@@ -124,6 +126,9 @@ public class MainGame extends AppCompatActivity {
         editor.putInt("numWin",this.numWin);
         editor.putInt("numWinMax",this.numWinMax);
         editor.putInt("dinGanadoMax",this.dinGanadoMax);
+        HashSet<String> toret=new HashSet();
+        for(int idCarta:this.idCartas) toret.add(Integer.toString(idCarta));
+        editor.putStringSet("idCartas",toret);
         editor.apply();
     }
 
@@ -142,6 +147,10 @@ public class MainGame extends AppCompatActivity {
         this.numWin=prefs.getInt("numWin",0);
         this.numWinMax=prefs.getInt("numWinMax",0);
         this.dinGanadoMax=prefs.getInt("dinGanadoMax",1000);
+        Set<String> toret=prefs.getStringSet("idCartas",null);
+        this.idCartas=new ArrayList<>();
+        if(toret!=null) for(String idCarta:toret) this.idCartas.add(Integer.parseInt(idCarta));
+        listaCartas.setAdapter(new MyAdapter(this.idCartas));
     }
 
     private void apostar(){
@@ -160,9 +169,8 @@ public class MainGame extends AppCompatActivity {
         int idImage=this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName());
         this.imagenCarta.setImageResource(idImage);
         this.idCartas.add(idImage);
-        RecyclerView.Adapter myAdapter=new MyAdapter(this.idCartas);
-        listaCartas.setAdapter(myAdapter);
-        Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());
+        listaCartas.setAdapter(new MyAdapter(this.idCartas));
+        //Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());
         if(this.puntJugador>21) this.setEstado(this.MAS21);
     }
 
@@ -235,6 +243,7 @@ public class MainGame extends AppCompatActivity {
             case CARTA1:
                 //this.turno.setText("Turno: Jugador");
                 this.idCartas=new ArrayList<>();
+                listaCartas.setAdapter(new MyAdapter(this.idCartas));
                 this.btnApostar.setEnabled(true);
                 this.btnRecibir.setEnabled(false);
                 this.btnPlantarse.setEnabled(false);
