@@ -33,13 +33,14 @@ public class MainGame extends AppCompatActivity {
     private int puntMaquina; //idem maquina
     private int dinGanado; //dinero total ganado por el jugador
     private int dinApostado; //dinero apostado en esta ronda
-
+    private String ganador;
     private int numRondas; //guarda el numero de rondas jugadas
     private int numWin; //numero de rondas ganadas seguidas
     private int numWinMax; //max numero de rondas ganadas seguidas
     private int dinGanadoMax; //max dinero total ganado por el jugador
 
     private ArrayList<Integer> idCartas;
+    public static ArrayList<Carta> cartasCasa;
 
     private int estado;
     private final int CARTA1=1; //estado: primera carta jugador
@@ -61,8 +62,8 @@ public class MainGame extends AppCompatActivity {
 
     private ImageView imagenCarta; //variable imagen interfaz
 
-    private RecyclerView listaCartas;
-
+    public static RecyclerView listaCartas;
+    //public static RecyclerView listaCartas2;
     //variables textos
     //private TextView turno;
     private TextView apuesta;
@@ -91,6 +92,10 @@ public class MainGame extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         listaCartas.setLayoutManager(layoutManager);
 
+       // LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        //layoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        //listaCartas2.setLayoutManager(layoutManager2);
+
         //variables inicializadas
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
@@ -102,8 +107,10 @@ public class MainGame extends AppCompatActivity {
         this.numWinMax=0;
         this.dinGanadoMax=1000;
         this.idCartas=new ArrayList<>();
+        //this.idCartas2=new ArrayList<>();
 
         listaCartas.setAdapter(new MyAdapter(this.idCartas));
+        //listaCartas2.setAdapter(new MyAdapter(this.idCartas2));
 
         //botones a sus funciones
         this.btnApostar.setOnClickListener((v) -> apostar());
@@ -176,44 +183,55 @@ public class MainGame extends AppCompatActivity {
 
     private void turnoMaquina(){ //la maquina intenta superar la puntuacion del jugador sin pasarse de 21
         //Handler handler = new Handler();
-        final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
-        dlg.setPositiveButton( "Aceptar", null );
-        dlg.setCancelable( false );
+        //final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
+        //dlg.setPositiveButton( "Aceptar", null );
+        //dlg.setCancelable( false );
         this.setEstado(this.CASA);
+        this.cartasCasa=new ArrayList<>();
             do{
                 Carta carta=this.baraja.getCarta();
                 this.setPuntMaquina(this.puntMaquina + carta.getValue());
-                //this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
+                this.cartasCasa.add(carta);
+               // this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
                 //handler.postDelayed(null,500);
+                //int idImage=this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName());
+                //this.imagenCarta.setImageResource(idImage);
+                //this.idCartas2.add(idImage);
+                //RecyclerView.Adapter myAdapter=new MyAdapter(this.idCartas2);
+                //listaCartas2.setAdapter(myAdapter);
+                //Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());
             }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
             if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
                 this.setDinGanado(this.dinGanado+this.dinApostado*2);
                 this.numWin++;
                 if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
-                dlg.setTitle("Ganas");
-                dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
+                ganador="Has ganado :)";
+                //dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
             }   else if(this.puntMaquina==this.puntJugador && this.puntJugador==21){ //jugador y maquina empatan
                     this.setDinGanado(this.dinGanado+this.dinApostado);
-                    dlg.setTitle("Empate");
-                    dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
+                    ganador="tablas";
+                  //  dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
                     }else{
-                    dlg.setTitle("Pierdes");
-                    dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
+                    ganador="Gana la casa :(";
+                   // dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
                     }
 
-
+        mostrarGanador(null);
         this.setDinApostado(0);
         //handler.postDelayed(null,3000);
-        dlg.create().show();
+        //dlg.create().show();
+
 
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
+        this.ganador="";
         this.imagenCarta.setImageResource(R.drawable.tapas);
         this.baraja.finalRonda(); //reinicia la baraja una vez acabada la ronda
         this.numRondas++;
         this.setEstado(this.CARTA1);
     }
+
 
     private void setPuntJugador(int punt){ //cambia puntuacion jugador y lo muestra en la vista
         this.puntJugador=punt;
@@ -275,6 +293,14 @@ public class MainGame extends AppCompatActivity {
        about.putExtra("dinGanadoMax",this.dinGanadoMax);
        startActivity(about); //con el start activity se ejcuta la transición
      }
+
+    private void mostrarGanador(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
+        Intent about = new Intent(this, TurnoMaquina.class); //Con el intent te desplazas de una clase a otra.
+        about.putExtra("ganador",this.ganador); //El about sirve para desplazar la variable a otra clase.
+        about.putExtra("puntMaquina",this.puntMaquina);
+        about.putExtra("puntJugador",this.puntJugador);
+        startActivity(about); //con el start activity se ejcuta la transición
+    }
 
      private void nuevaPartida(){ //Metodo nueva partida, restablece los datos de inicio.
          //Se vuelven a inicializar las variables
