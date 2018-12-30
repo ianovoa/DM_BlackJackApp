@@ -33,7 +33,6 @@ public class MainGame extends AppCompatActivity {
     private int puntMaquina; //idem maquina
     private int dinGanado; //dinero total ganado por el jugador
     private int dinApostado; //dinero apostado en esta ronda
-    private String ganador;
     private int numRondas; //guarda el numero de rondas jugadas
     private int numWin; //numero de rondas ganadas seguidas
     private int numWinMax; //max numero de rondas ganadas seguidas
@@ -62,8 +61,8 @@ public class MainGame extends AppCompatActivity {
 
     private ImageView imagenCarta; //variable imagen interfaz
 
-    public static RecyclerView listaCartas;
-    //public static RecyclerView listaCartas2;
+    private RecyclerView listaCartas; //lista horizontal de cartas
+
     //variables textos
     //private TextView turno;
     private TextView apuesta;
@@ -182,50 +181,45 @@ public class MainGame extends AppCompatActivity {
     }
 
     private void turnoMaquina(){ //la maquina intenta superar la puntuacion del jugador sin pasarse de 21
-        //Handler handler = new Handler();
-        //final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
-        //dlg.setPositiveButton( "Aceptar", null );
-        //dlg.setCancelable( false );
+        /*Handler handler = new Handler();
+        final AlertDialog.Builder dlg = new AlertDialog.Builder( this ); //sol. cutre
+        dlg.setPositiveButton( "Aceptar", null );
+        dlg.setCancelable( false );*/
+        String toret;
         this.setEstado(this.CASA);
         this.cartasCasa=new ArrayList<>();
             do{
                 Carta carta=this.baraja.getCarta();
                 this.setPuntMaquina(this.puntMaquina + carta.getValue());
                 this.cartasCasa.add(carta);
-               // this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
-                //handler.postDelayed(null,500);
-                //int idImage=this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName());
-                //this.imagenCarta.setImageResource(idImage);
-                //this.idCartas2.add(idImage);
-                //RecyclerView.Adapter myAdapter=new MyAdapter(this.idCartas2);
-                //listaCartas2.setAdapter(myAdapter);
-                //Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());
+                /*this.imagenCarta.setImageResource(this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName()));
+                handler.postDelayed(null,500);
+                int idImage=this.getResources().getIdentifier(carta.getImage(),"drawable",getPackageName());
+                this.imagenCarta.setImageResource(idImage);
+                Log.d( LogTag,"Num elementos lista: "+myAdapter.getItemCount());*/
             }while (this.puntMaquina<21 && this.puntMaquina<=this.puntJugador);
 
             if(this.puntJugador<=21 && this.puntMaquina>21){ //jugador gana la partida
                 this.setDinGanado(this.dinGanado+this.dinApostado*2);
                 this.numWin++;
                 if(this.numWin>this.numWinMax) this.numWinMax=this.numWin;
-                ganador="Has ganado :)";
+                toret="Has ganado :)";
                 //dlg.setMessage( "El jugador gana la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
             }   else if(this.puntMaquina==this.puntJugador && this.puntJugador==21){ //jugador y maquina empatan
                     this.setDinGanado(this.dinGanado+this.dinApostado);
-                    ganador="tablas";
+                toret="tablas";
                   //  dlg.setMessage( "El jugador empata con la casa\nEl jugador recupera el dinero apostado");
                     }else{
-                    ganador="Gana la casa :(";
+                toret="Gana la casa :(";
                    // dlg.setMessage( "El jugador pierde la ronda\n\nPunt. jugador: "+this.puntJugador+"\nPunt. casa: "+this.puntMaquina);
                     }
 
-        mostrarGanador(null);
+        mostrarGanador(toret);
         this.setDinApostado(0);
         //handler.postDelayed(null,3000);
         //dlg.create().show();
-
-
         this.setPuntJugador(0);
         this.setPuntMaquina(0);
-        this.ganador="";
         this.imagenCarta.setImageResource(R.drawable.tapas);
         this.baraja.finalRonda(); //reinicia la baraja una vez acabada la ronda
         this.numRondas++;
@@ -287,16 +281,16 @@ public class MainGame extends AppCompatActivity {
         }
     }
 
-    private void mostrarMejoresPuntuaciones(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
+    private void mostrarMejoresPuntuaciones() { //Muestra las mejores puntuaciones que haya conseguido el jugador.
        Intent about = new Intent(this, MejoresPuntuaciones.class); //Con el intent te desplazas de una clase a otra.
        about.putExtra("numWinMax",this.numWinMax); //El about sirve para desplazar la variable a otra clase.
        about.putExtra("dinGanadoMax",this.dinGanadoMax);
        startActivity(about); //con el start activity se ejcuta la transición
      }
 
-    private void mostrarGanador(View v) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
+    private void mostrarGanador(String ganador) { //Muestra las mejores puntuaciones que haya conseguido el jugador.
         Intent about = new Intent(this, TurnoMaquina.class); //Con el intent te desplazas de una clase a otra.
-        about.putExtra("ganador",this.ganador); //El about sirve para desplazar la variable a otra clase.
+        about.putExtra("ganador",ganador); //El about sirve para desplazar la variable a otra clase.
         about.putExtra("puntMaquina",this.puntMaquina);
         about.putExtra("puntJugador",this.puntJugador);
         startActivity(about); //con el start activity se ejcuta la transición
@@ -311,12 +305,9 @@ public class MainGame extends AppCompatActivity {
          this.setEstado(this.CARTA1);
          this.numRondas=0;
          this.numWin=0;
-
-
      }
 
     @Override public boolean onCreateOptionsMenu(Menu mimenu){
-
         getMenuInflater().inflate(R.menu.main_menu,mimenu);
         return true;
     }
@@ -335,9 +326,7 @@ public class MainGame extends AppCompatActivity {
             dlg.setCancelable( false );
             dlg.create().show(); //muestra la venta emergente que hemos hecho
         }
-
-
-        if(id==R.id.MejoresPuntuaciones) mostrarMejoresPuntuaciones(null);
+        if(id==R.id.MejoresPuntuaciones) mostrarMejoresPuntuaciones();
         return super.onOptionsItemSelected(opcion_menu);
     }
 }
