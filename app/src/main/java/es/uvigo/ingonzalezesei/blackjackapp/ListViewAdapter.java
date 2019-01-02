@@ -7,26 +7,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.List;
 
 class ListViewAdapter extends BaseAdapter {
 
     // Declaramos las Variables
-    Context context; //Contexto, a donde esta llamando
-    String[] titulos; //son los titulos creados en Turnomaquina
-    int[] imagenes;  //son las imagenes llamdas en TurnoMaquina
-    LayoutInflater inflater; //Crea una instancia e un archivo XML de diseño en sus correspondientes objetos de vista.Nuca se usa directamente
+    private Context context; //Contexto, a donde esta llamando
+    private List<Carta> cartas;
+    private LayoutInflater inflater; //Crea una instancia e un archivo XML de diseño en sus correspondientes objetos de vista.Nuca se usa directamente
 
 
     //Constructor; No suele ser necesario, peor lo recomendaban en el tutorial
-    public ListViewAdapter(Context context, String[] titulos, int[] imagenes) {
+    public ListViewAdapter(Context context, List<Carta> cartas) {
         this.context = context;
-        this.titulos = titulos;
-        this.imagenes = imagenes;
+        this.cartas=cartas;
     }
 
     @Override
     public int getCount() {
-        return titulos.length;
+        return cartas.size();
     }
 
     @Override
@@ -40,24 +39,18 @@ class ListViewAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        // Declare Variables
-        TextView txtTitle;
-        ImageView imgImg;
-
         //Este inflanter definido arriba, es como un intermediario.
-        //http://developer.android.com/intl/es/reference/android/view/LayoutInflater.html
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.estilo, parent, false);
 
         // Locate the TextViews in estilo_item.xml
-        txtTitle = (TextView) itemView.findViewById(R.id.estilo_title);
-        imgImg = (ImageView) itemView.findViewById(R.id.estilo_image);
+        TextView txtTitle = itemView.findViewById(R.id.estilo_title);
+        ImageView imgImg = itemView.findViewById(R.id.estilo_image);
 
         // Capture position and set to the TextViews
-        txtTitle.setText(titulos[position]);
-        imgImg.setImageResource(imagenes[position]);
+        txtTitle.setText(this.cartas.get(position).getName());
+        imgImg.setImageResource(this.context.getResources().getIdentifier(this.cartas.get(position).getImage(),"drawable",this.context.getPackageName()));
 
         return itemView;
     }
