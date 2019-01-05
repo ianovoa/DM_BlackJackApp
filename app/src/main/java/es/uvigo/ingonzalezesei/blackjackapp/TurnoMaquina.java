@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,9 @@ public class TurnoMaquina extends AppCompatActivity {
     TextView textPuntCasa; //max dinero total ganado por el jugador
     TextView textPuntJugador;
     ListViewAdapter adapter;
+
+    //DEFINO LA FLECHITA VOLVER:
+    ImageView ivRegresar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,15 @@ public class TurnoMaquina extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView adapterView, View view, int i, long l) {
                 return false;
+            }
+        });
+
+        //FLECHITA REGRESAR:
+        ivRegresar = (ImageView) findViewById(R.id.ivRegresar);
+        ivRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

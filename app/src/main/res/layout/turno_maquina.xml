@@ -24,6 +24,13 @@
             android:layout_weight=".9"
             android:text="TextView" />
 
+        <ImageView
+            android:id="@+id/ivRegresar"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_weight=".9"
+            app:srcCompat="@drawable/volver" />
+
     </LinearLayout>
 
 
